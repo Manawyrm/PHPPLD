@@ -6,9 +6,8 @@
  * @author		Tobias Mädel (@manawyrm) <t.maedel@alfeld.de>
  */
 
-
 $optionIndex = false; 
-$options = getopt ( "i:w:", [], $optionIndex );
+$options = getopt ( "i:w:t:", [], $optionIndex );
 if (!$options)
 {
 	print_usage();
@@ -43,10 +42,21 @@ $numberOfInputs = (int) $options["i"];
 $numberOfOutputs = 8;
 
 load_pld($filename);
-$bitstream = generate_bitstream($numberOfInputs, $numberOfOutputs);
+
+if (isset($options["t"]) && $options["t"] !== false)
+{
+	$output_array = evaluate_input((int)$options["t"], $numberOfInputs, $numberOfOutputs);
+	$output = "";
+	for ($i=0; $i < $numberOfOutputs; $i++) { 
+		$output .= $output_array[$i] ? "1" : "0";
+	}
+	error_log("Result for input " . (int)$options["t"] . ":");
+	error_log($output);
+}
 
 if (isset($options["w"]) && $options["w"] !== false)
 {
+	$bitstream = generate_bitstream($numberOfInputs, $numberOfOutputs);
 	file_put_contents($options["w"], $bitstream);
 }
 
@@ -58,8 +68,10 @@ function print_usage()
 	error_log("Usage: php phppld.php <input file>");
 	error_log(" -i <number of input bits> (required)");
 	error_log(" -w <target filename>");
-}
+	error_log(" -t <input to test>");
 
+}
+	
 function load_pld($pldFilename)
 {
 	$pldContent = file_get_contents($pldFilename);
@@ -94,10 +106,15 @@ function evaluate_input($input, $numberOfInputs, $numberOfOutputs)
 	$output_array = [];
 	for ($outputBit=0; $outputBit < $numberOfOutputs; $outputBit++)
 	{ 
-		$output_array[$outputBit] = 0;
+		$output_array[$outputBit] = false;
 	}
 
 	$return = @pldeval($input_array, $output_array);
+
+	for ($outputBit=0; $outputBit < $numberOfOutputs; $outputBit++)
+	{ 
+		$output_array[$outputBit] = !!$output_array[$outputBit];
+	}
 	return $output_array;
 }
 

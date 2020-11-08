@@ -7,9 +7,14 @@
 
 $address = integer_value($input);
 
-if ($address == 0x3)
+if ($address >= 0x20 && $address <= 0x40)
 {
-	$cs = 1; 
+	$cs_chip1 = 1; 
+}
+if ($address >= 0x60 && $address <= 0x65)
+{
+	$cs_chip2 = 1; 
 }
 
-$output[0] = $cs; 
+$output[0] = $cs_chip1; 
+$output[1] = !$cs_chip2; 
