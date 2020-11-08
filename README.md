@@ -1,7 +1,7 @@
 # PHPPLD
 PHPPLD provides a simple and easy way to use EEPROMs as a programmable logic device.  
 
-![Example of an EEPROM PLD](https://screenshot.tbspace.de/hoygvkrlids.jpg){:width="30%"}
+<img src="https://screenshot.tbspace.de/hoygvkrlids.jpg" width="60%">
 
 The behaviour of the resulting bitstream can be described as a simple PHP script.  
 Logical functions like NOT, AND, OR, XOR, etc. as well as more complex address decoding can be done. 
