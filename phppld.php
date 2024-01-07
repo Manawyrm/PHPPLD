@@ -3,7 +3,7 @@
  * @brief		PHP-PLD
  * @date		2020-11-07
  * @version		1.0
- * @author		Tobias Mädel (@manawyrm) <t.maedel@alfeld.de>
+ * @author		Manawyrm
  */
 
 $optionIndex = false; 
@@ -63,7 +63,7 @@ if (isset($options["w"]) && $options["w"] !== false)
 function print_usage()
 {
 	error_log("PHP-PLD v0.1");
-	error_log("Written by Tobias Mädel (@manawyrm)");
+	error_log("Written by Manawyrm");
 	error_log("");
 	error_log("Usage: php phppld.php <input file>");
 	error_log(" -i <number of input bits> (required)");
